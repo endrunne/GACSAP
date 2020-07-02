@@ -1,59 +1,106 @@
 import { geneticAlgorithmConstructor } from '../index.js'
 
 export function example() {
-	var PhenotypeSize = 10;
-	
-	function muttationFunction(phenotype) {
-		var gene = Math.floor( Math.random() * phenotype.numbers.length );
-		phenotype.numbers[gene] += Math.random() * 20 - 10;
-		return phenotype;
-	}
-	
-	function crossoverFunction(a, b) {
-		function cloneJSON( item ) {
-			return JSON.parse ( JSON.stringify ( item ) )
-		}
-	
-		var x = cloneJSON(a), y = cloneJSON(b), cross = false;
-	
-		for (var i in a.numbers) {
-			if ( Math.random() * a.numbers.length <= 1 ) { cross = !cross }
-			if (cross) {
-				x.numbers[i] = b.numbers[i];
-				y.numbers[i] = a.numbers[i];
-			}
-		}
-		return [ x , y ];
-	}
-	
-	function fitnessFunction(phenotype) {
-		var sumOfPowers = 0;
-		for (var i in phenotype.numbers) {
-			// assume perfect solution is '50.0' for all numbers
-			sumOfPowers += Math.pow( 50 - phenotype.numbers[i], 2);
-		}
-		return 1 / Math.sqrt(sumOfPowers);
-	}
-	
-	function createEmptyPhenotype() {
-		var data = [4,5,6];
-		for (var i = 0; i < PhenotypeSize; i += 1) {
-			data[i] = 0
-		}
-		return { numbers : data }
-	}
-		
-	return new Promise (function(resolve, reject) {		
-		var geneticAlgorithm = geneticAlgorithmConstructor({
-			mutationFunction: muttationFunction,
-			crossoverFunction: crossoverFunction,
-			// fitnessFunction: 50,
-			population: [ createEmptyPhenotype() ],
-			populationSize: PhenotypeSize * 10
-		});
-		
-		for( var i = 0 ; i < 20 * PhenotypeSize ; i++ ) geneticAlgorithm.evolve()
-		console.log(geneticAlgorithm.best());
-	})
-	.then()
+    var mutationFunction = function( phenotype ) {
+        var gene1_index = Math.floor(Math.random() * phenotype.length )
+        var gene2_index = Math.floor(Math.random() * phenotype.length )
+        var temp = phenotype[ gene1_index ]
+        phenotype[ gene1_index ] = phenotype[ gene2_index ]
+        phenotype[ gene2_index ] = temp
+        //console.log("mutant = " + JSON.stringify(phenotype))
+        return phenotype
+    }
+
+    function helper_concat(index,phenotypeA,phenotypeB) {
+        return phenotypeA.slice(0,index).concat( phenotypeB.slice(index) ).concat( phenotypeA.slice(index) )
+    }   
+
+    function helper_removeDuplicates(phenotype) {
+        var duplicates = {}
+        return phenotype.filter( function( item ) { 
+            if ( duplicates[JSON.stringify(item)] ) { return false }
+            else { duplicates[JSON.stringify(item)] = true ; return true }
+        })
+    }
+
+    function crossoverFunction(phenotypeA, phenotypeB) {
+        var index = Math.round( Math.random() * phenotypeA.length )
+
+
+        var phenotypeX = helper_removeDuplicates( helper_concat(index,phenotypeA,phenotypeB) )
+        var phenotypeY = helper_removeDuplicates( helper_concat(index,phenotypeB,phenotypeA) )
+
+        // move, copy, or append some values from a to b and from b to a
+        return [ phenotypeX , phenotypeY ]
+    }   
+
+
+    var fitnessFunction = function( phenotype ) {
+
+        var calculateDistance = function(a, b) {
+            return Math.sqrt( Math.pow( a.x - b.x , 2 ) + Math.pow( a.y - b.y , 2 ) )
+        }
+
+        var result;
+
+        var prev = phenotype[ 0 ]
+        //console.log("The phenotype are " + JSON.stringify(phenotype))
+        var distances = phenotype.slice(1).map( function( item ) { result = [prev,item] ; prev = item ; return result } )
+        //console.log("The distances are " + JSON.stringify(distances))
+        var distance = distances.reduce( function( total, item ) { 
+            //console.log("item = " + JSON.stringify(item) )
+            return total + calculateDistance(item[0],item[1])
+        } , 0 )
+        //console.log("total = " + distance )
+        return -1 * distance
+    }   
+
+    // outline a large square but not in order.
+    var firstPhenotype = []
+    
+    for (var i=2;i<10;i++) {
+        firstPhenotype.push( {x:i,y:1} )
+        firstPhenotype.push( {x:1,y:i} )
+        firstPhenotype.push( {x:i,y:10} )
+        firstPhenotype.push( {x:10,y:i} )
+    }
+    
+    var geneticAlgorithm;
+
+    return new Promise (function(resolve, reject) {
+        geneticAlgorithm = geneticAlgorithmConstructor({
+           mutationFunction: mutationFunction,
+           crossoverFunction: crossoverFunction,
+        //    fitnessFunction: fitnessFunction,
+           population: [ firstPhenotype ],
+           populationSize:1000
+        });    
+        
+        if (geneticAlgorithm != null)
+            resolve()
+        else
+            reject()
+        
+    }).then(() => {
+        console.log("Starting with:")
+        console.log( firstPhenotype )
+        var best = []
+        var previousBestScore = 0
+        for( var a = 0 ; a < 100 ; a++ ) {
+           for( var i = 0 ; i < 25 ; i++ ) geneticAlgorithm.evolve()
+           var score = geneticAlgorithm.bestScore()
+    
+           if ( score == previousBestScore ) {
+               break;
+           }
+           
+           previousBestScore = score
+           console.log("Distance is " + -1 * score)
+        }
+        
+        best = geneticAlgorithm.best()
+        console.log("Finished with:")
+        console.log(best)
+        console.log("Distance is " + -1 * fitnessFunction(best))
+    })
 }

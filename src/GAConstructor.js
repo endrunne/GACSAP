@@ -4,7 +4,6 @@ export function settingsDefaults() {return {
     crossoverFunction : function(a,b) {return [a,b]},
     fitnessFunction : function(phenotype) {return 0},
     doesABeatBFunction : undefined,
-
     population : [],
     populationSize : 100,
 }}

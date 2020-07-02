@@ -1,4 +1,3 @@
-import {settings} from './src/GASettings.js'
 import {settingsDefaults} from './src/GAConstructor.js'
 import {mutate} from './src/mutationFunction/index.js'
 import {crossover} from './src/crossoverFunction/index.js'
@@ -8,41 +7,14 @@ import {localSettingsSet} from './src/localSettings.js'
 import {localSettings} from './src/localSettings.js'
 
 export function geneticAlgorithmConstructor(options) {
-
-    // localSettings = settings(options, settingsDefaults())
-
-    var local = localSettingsSet(options, settingsDefaults())
-    var l = localSettings()
-
-    // TESTE APENAS
-
-    // function mutate(phenotype) {
-    //     return l.muttationFunction(cloneJSON(phenotype))
-    // }
-
-    // function doesABeatB(a, b) {
-    //     var doesABeatB = false;
-    //     if ( l.doesABeatBFunction ) {
-    //         return l.doesABeatBFunction(a,b)
-    //     } else {
-    //         return l.fitnessFunction(a) >= l.fitnessFunction(b)
-    //     }
-    // }
-
-    function crossover(phenotype) {
-        phenotype = cloneJSON(phenotype)
-        var mate = l.population[Math.floor(Math.random() * l.population.length)]
-        mate = cloneJSON(mate)
-        return l.crossoverFunction(phenotype, mate)[0]
-    }
-
-    // TESTE APENAS
+    localSettingsSet(options, settingsDefaults())
+    var settings = localSettings()
 
     function populate () {
-        var size = l.population.length
-        while(l.population.length < l.populationSize) {
-            l.population.push(                    
-                mutate(cloneJSON(l.population[Math.floor(Math.random() * size)]))
+        var size = settings.population.length
+        while(settings.population.length < settings.populationSize) {
+            settings.population.push(                    
+                mutate(cloneJSON(settings.population[Math.floor(Math.random() * size)]))
             )
         }
     }
@@ -50,9 +22,9 @@ export function geneticAlgorithmConstructor(options) {
     function compete () {
         var nextGeneration = []
 
-        for(var p = 0; p < l.population.length - 1; p += 2) {
-            var phenotype = l.population[p];
-            var competitor = l.populationSize[p+1];
+        for(var p = 0; p < settings.population.length - 1; p += 2) {
+            var phenotype = settings.population[p];
+            var competitor = settings.populationSize[p+1];
 
             nextGeneration.push(phenotype)
             if(doesABeatB(phenotype, competitor)) {
@@ -64,22 +36,22 @@ export function geneticAlgorithmConstructor(options) {
             }            
         }
 
-        l.population = nextGeneration;
+        settings.population = nextGeneration;
     }
 
     function randomizePopulationOrder () {
-        for(var index = 0; index < l.population.length; index++) {
-            var otherIndex = Math.floor(Math.random() * l.population.length)
-            var temp = l.population[otherIndex]
-            l.population[otherIndex] = l.population[index]
-            l.population[index] = temp
+        for(var index = 0; index < settings.population.length; index++) {
+            var otherIndex = Math.floor(Math.random() * settings.population.length)
+            var temp = settings.population[otherIndex]
+            settings.population[otherIndex] = settings.population[index]
+            settings.population[index] = temp
         }
     }
 
     return {
         evolve : function(options) {
             if (options) {
-                l = settings(options, l)
+                settings = settings(options, settings)
             }
 
             populate()
@@ -96,7 +68,7 @@ export function geneticAlgorithmConstructor(options) {
             return cloneJSON(result)
         },
         bestScore : function() {
-            return l.fitnessFunction(this.best())
+            return settings.fitnessFunction(this.best())
         },
         population : function() {
             return cloneJSON(this.config().population)
@@ -105,15 +77,15 @@ export function geneticAlgorithmConstructor(options) {
             return this.population().map(function(phenotype) {
                 return {
                     phenotype : cloneJSON(phenotype),
-                    score : l.fitnessFunction(phenotype)
+                    score : settings.fitnessFunction(phenotype)
                 }
             })        
         },
         config : function() {
-            return cloneJSON(l)
+            return cloneJSON(settings)
         },
         clone : function(options) {
-            return geneticAlgorithmConstructor(settings(options, settings(this.config(), l)))
+            return geneticAlgorithmConstructor(settings(options, settings(this.config(), settings)))
         }
     }
 }    

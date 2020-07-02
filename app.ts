@@ -8,14 +8,14 @@ const HOST = env.HOST || '127.0.0.1'
 const router = new Router()
 const app = new Application()
 
-const T = ({response} : {response: any}) => {    
+const executeRoutine = ({response} : {response: any}) => {    
     example().then((data:any) => {
-        response.body = data
+        response.body = data    
     })
 } 
 
 router
-        .get('/', T)
+        .get('/', executeRoutine)
 
 app.use(router.routes())
 app.use(router.allowedMethods())

@@ -11,11 +11,8 @@ export function settings(settings, defaults) {
 
     settings.population = settings.population || defaults.population
 
-    settings.population = []
-
-    if ( settings.population.length <= 0 ) 
-        console.log("population must be an array and contain at least 1 phenotypes")
-        // throw Error("population must be an array and contain at least 1 phenotypes")
+    if ( settings.population.length <= 0 )     
+        throw Error("population must be an array and contain at least 1 phenotypes")
 
     settings.populationSize = settings.populationSize || defaults.populationSize
     
