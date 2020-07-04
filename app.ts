@@ -1,5 +1,6 @@
 import { Application, Router } from 'https://deno.land/x/oak/mod.ts'
-import {example}  from './example/index.js'
+import {csap} from './csap/index.js'
+//import {example}  from './example/index.js'
 
 const env = Deno.env.toObject()
 const PORT = env.PORT || 4000
@@ -9,8 +10,12 @@ const router = new Router()
 const app = new Application()
 
 const executeRoutine = ({response} : {response: any}) => {    
-    example().then((data:any) => {
-        response.body = data    
+    //example().then((data:any) => {
+    //    response.body = data    
+    //})
+
+    csap().then((c:any) => {
+        response.body = c
     })
 } 
 
