@@ -1,0 +1,6 @@
+version: "2.1"
+description: "deno orb"
+jobs:
+    build:
+        docker:
+            - image: endrunne/deno-mongodb:develop
