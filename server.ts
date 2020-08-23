@@ -4,6 +4,6 @@ import route from './routes.ts';
 
 const app = new Application();
 
-app.use("/api/posts", route);
+app.use("/api/v1/classrooms", route);
 
 await app.run();
