@@ -1,4 +1,3 @@
-//import {Router} from "https://deno.land/x/oak/mod.ts";
 import {Router} from "https://deno.land/x/denotrain@v0.5.0/mod.ts"
 import {getClassrooms, saveClassroom, getSingleClassroom, updateClassroom, deleteClassroom} from "./src/controller/index.ts"
 
