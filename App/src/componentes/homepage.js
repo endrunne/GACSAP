@@ -5,7 +5,7 @@ export const CursoPage = props => {
     return (
         <div className='container'>
             <Cabecalho titulo="ABC Cursos" subtitulo="Bem vindo a página!"/>
-            <CursoListagem />
+            <CursoListagem isAdmin={false}/>
         </div>
     )
 }

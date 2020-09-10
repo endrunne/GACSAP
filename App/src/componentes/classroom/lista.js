@@ -32,9 +32,10 @@ const ClassroomList = props => {
                     </td>
                 :
                     <>
-                        <td>{classroom.cargaHoraria}</td>
-                        <td>{classroom.preco}</td>
-                        <td>{classroom.categoria}</td>
+                        <td>{classroom.codigo}</td>
+                        <td>{classroom.lugares}</td>
+                        <td>{classroom.lugaresAcessiveis}</td>
+                        <td>{classroom.isSalaAcessivel}</td>
                     </>
                 }
             </tr>
@@ -47,11 +48,13 @@ const ClassroomList = props => {
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Descrição</th>
+                        <th>Lugares</th>
+                        <th>Lugares Acessiveis</th>
+                        <th>Sala Acessivel?</th>
                         {props.isAdmin ? <th></th> :
                             <>
-                                <th>FOO</th>
-                                <th>BAR</th>
+                                <th>Editar</th>
+                                <th>Excluir</th>
                             </>
                         }
                     </tr>

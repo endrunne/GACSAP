@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Multiselect } from 'multiselect-react-dropdown'
+import { Multiselect } from 'multiselect-react-dropdown'/*utilizar depois, no lugar de sala acessivel, trocar por atributos da sala*/
 
 import {
     setInputForms,
@@ -25,6 +25,10 @@ const ClassroomForm = props => {
 
     const {
         _id,
+        codigo,
+        lugares,
+        lugaresAcessiveis,
+        isSalaAcessivel,
 
         isAlteracao,
     
@@ -37,53 +41,53 @@ const ClassroomForm = props => {
             <h3 className="border-bottom">Formulário</h3>
             <form>
                 <div className="form-group row" style={styles.divInputGroup}>
-                    <label htmlFor="inpCodigo"
+                    <label htmlFor="codigo"
                         className="col-sm-3 col-form-label">
                         Código:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="inpCodigo"
-                            value={null}
+                            className="form-control" id="codigo"
+                            value={codigo}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="inpLugares"
+                    <label htmlFor="lugares"
                         className="col-sm-3 col-form-label">
                         Lugares:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="inpLugares"
-                            value={null}
+                            className="form-control" id="lugares"
+                            value={lugares}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="inpLugaresAcessiveis"
+                    <label htmlFor="lugaresAcessiveis"
                         className="col-sm-3 col-form-label">
                         Lugares Acessiveis:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="inpLugaresAcessiveis"
-                            value={null}
+                            className="form-control" id="lugaresAcessiveis"
+                            value={lugaresAcessiveis}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="inpLugaresAcessiveis"
+                    <label htmlFor="salaAcessivel"
                         className="col-sm-3 col-form-label">
-                        Sala acessível?
+                        A Sala é acessível?
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
-                        <input type="number"
-                            className="form-control" id="inpLugaresAcessiveis"
-                            value={null}
+                        <input type="checkbox"
+                            className="form-control" id="salaAcessivel"
+                            checked={isSalaAcessivel}
                             onChange={setInputForms} />
                     </div>  
                 </div>
@@ -100,7 +104,10 @@ const ClassroomForm = props => {
 }
 
 const mapStoreToProps = store => ({
-    //codigo: store.curso.codigo
+    codigo: store.classroom.codigo,
+    lugares: store.classroom.lugares,
+    lugaresAcessiveis: store.classroom.lugaresAcessiveis,
+    isSalaAcessivel: store.classroom.isSalaAcessivel
 })
 
 const mapActionToProps = dispatch => bindActionCreators({

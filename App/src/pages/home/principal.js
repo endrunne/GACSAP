@@ -4,21 +4,26 @@ import { ClassroomList } from '../../componentes/classroom/lista'
 
 import axios from 'axios'
 
-const URL = 'http://localhost:3000/api/posts'
+const URL = 'http://localhost:3000/api/v1/classrooms'
 
 export const HomePage = props => {
 
     const [classrooms, setClassrooms] = useState([])
 
     useEffect(()=>{
-        const getClassrooms = async _ => {
-            const result = await axios.get(URL)
-            if(result.data){
-                setClassrooms(result.data)
+        try{
+            const getClassrooms = async _ => {
+                const result = await axios.get(URL)
+                if(result.data){
+                    setClassrooms(result.data)
+                }
             }
+            getClassrooms()
+        }
+        catch(e){
+            console.log(e)
         }
 
-        getClassrooms()
     }, [setClassrooms])
 
     return (

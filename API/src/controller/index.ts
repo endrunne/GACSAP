@@ -11,7 +11,7 @@ export const getClassrooms = async (req: any) => {
 
 export const getSingleClassroom = async ({ req }: { req: any }) => {
     const classroom: Classroom | undefined = await classrooms.findOne({
-        _classroomGroupId: {
+        _id: {
             "$oid": req.params.id
         }
     });
@@ -26,15 +26,23 @@ export const getSingleClassroom = async ({ req }: { req: any }) => {
 }
 
 export const saveClassroom = async ({ req, res }: { req: any, res: any }) => {
-    const { 
-        normalSpacesQty,
-        accessableSpacesQty,
+    const 
+    {
+        normalSpaces, 
+        accessableSpaces,
+        code,
+        name,
+        assignedGroup,
         attributes
     } = req.body;
 
+
     const newClassrooms = await classrooms.insertOne({
-        normalSpacesQty,
-        accessableSpacesQty,
+        normalSpaces, 
+        accessableSpaces,
+        code,
+        name,
+        assignedGroup,
         attributes
     });
 
@@ -47,7 +55,7 @@ export const saveClassroom = async ({ req, res }: { req: any, res: any }) => {
 
 export const updateClassroom = async ({req,res}: {req: any, res: any}) => {
     const foundClassroom = await classrooms.findOne({
-        _classroomGroupId: {
+        _id: {
             "$oid": req.params.id
         } 
     })
@@ -55,7 +63,7 @@ export const updateClassroom = async ({req,res}: {req: any, res: any}) => {
     let updatedClassroom;
     if (foundClassroom){
         updatedClassroom = await classrooms.updateOne({
-            _classroomGroupId: {
+            _id: {
                 "$oid": req.params.id
             }
         },
@@ -76,14 +84,14 @@ export const updateClassroom = async ({req,res}: {req: any, res: any}) => {
 
 export const deleteClassroom = async ({ req, res }: { req: any, res: any }) => {
     const foundClassroom = await classrooms.findOne({
-        _classroomGroupId: {
+        _id: {
             "$oid": req.params.id
         }
     })
 
     if (foundClassroom) {
         await classrooms.deleteOne({
-            _classroomGroupId: {
+            _id: {
                 "$oid": req.params.id
             }
         }
