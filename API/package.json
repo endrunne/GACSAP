@@ -1,0 +1,22 @@
+{
+  "name": "gacsap",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/visemctor/GACSAP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/visemctor/GACSAP/issues"
+  },
+  "homepage": "https://github.com/visemctor/GACSAP#readme"
+}
