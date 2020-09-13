@@ -13,11 +13,11 @@ export function example() {
 
     function helper_concat(index,phenotypeA,phenotypeB) {
         return phenotypeA.slice(0,index).concat( phenotypeB.slice(index) ).concat( phenotypeA.slice(index) )
-    }   
+    }
 
     function helper_removeDuplicates(phenotype) {
         var duplicates = {}
-        return phenotype.filter( function( item ) { 
+        return phenotype.filter( function( item ) {
             if ( duplicates[JSON.stringify(item)] ) { return false }
             else { duplicates[JSON.stringify(item)] = true ; return true }
         })
@@ -32,7 +32,7 @@ export function example() {
 
         // move, copy, or append some values from a to b and from b to a
         return [ phenotypeX , phenotypeY ]
-    }   
+    }
 
 
     var fitnessFunction = function( phenotype ) {
@@ -47,24 +47,24 @@ export function example() {
         //console.log("The phenotype are " + JSON.stringify(phenotype))
         var distances = phenotype.slice(1).map( function( item ) { result = [prev,item] ; prev = item ; return result } )
         //console.log("The distances are " + JSON.stringify(distances))
-        var distance = distances.reduce( function( total, item ) { 
+        var distance = distances.reduce( function( total, item ) {
             //console.log("item = " + JSON.stringify(item) )
             return total + calculateDistance(item[0],item[1])
         } , 0 )
         //console.log("total = " + distance )
         return -1 * distance
-    }   
+    }
 
     // outline a large square but not in order.
     var firstPhenotype = []
-    
+
     for (var i=2;i<10;i++) {
         firstPhenotype.push( {x:i,y:1} )
         firstPhenotype.push( {x:1,y:i} )
         firstPhenotype.push( {x:i,y:10} )
         firstPhenotype.push( {x:10,y:i} )
     }
-    
+
     var geneticAlgorithm;
 
     return new Promise (function(resolve, reject) {
