@@ -15,7 +15,7 @@ const ClassroomList = props => {
 
     const exibirLinhas = () => {
         //retorna a lista de props se existir
-        const classrooms = props.classrooms || []
+        const classrooms = Object.values(props.classrooms) || []
         return classrooms.map(classroom => (
             <tr key={classroom._id}>
 
