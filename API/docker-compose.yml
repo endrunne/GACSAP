@@ -1,8 +1,8 @@
 version: "3.7"
 
 services:
-  deno:
-    image: "deno-docker:0.0.1"
+  node:
+    image: "node:12"
     build: .
     ports:
       - "3000:3000"
@@ -16,7 +16,6 @@ services:
     ports:
         - 27017:27017
     volumes:
-        #- ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-        - ./mongodb_data_container:/data/db
+      - mongodata:/data/db
 volumes:
-    mongodb_data_container:
+  mongodata:
