@@ -5,7 +5,9 @@
   "main": "src/loader.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "inspect": "node --inspect=0.0.0.0:9229 src/loader.js",
+    "start_watch_inspect": "nodemon --delay 80ms --watch src/ --exec 'npm run inspect'"
   },
   "keywords": [],
   "author": "Vinícius Queiroz Costa",

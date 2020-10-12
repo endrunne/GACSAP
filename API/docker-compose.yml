@@ -5,6 +5,7 @@ services:
     container_name: node
     image: "node:12"
     build: ./
+    command: npm run start_watch_inspect
     ports:
       - "3000:3000"
     depends_on:

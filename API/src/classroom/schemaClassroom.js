@@ -1,15 +1,15 @@
 const restful  = require('node-restful')
 
 const schemaClassroom = new restful.mongoose.Schema({
-    normalSpaces: { type: Number, required: false},
-    accessableSpaces: { type: Number, required: false},
-    code: { type: String, required: false},
-    name: { type: String, required: false},
-    assignedGroup: { type: String, required: false},
+    normalSpaces: { type: Number, required: true, min: 0},
+    accessableSpaces: { type: Number, required: true, min: 0},
+    code: { type: String, required: true,},
+    name: { type: String},
+    assignedGroup: { type: String},
     attributes: [{
-        attributeName: { type: String, required: false},
-        attributeDisplayName: { type: String, required: false},
-        attributeValue: { type: String, required: false}
+        attributeName: { type: String},
+        attributeDisplayName: { type: String},
+        attributeValue: { type: String}
     }]
 })
 
