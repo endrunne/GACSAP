@@ -1,0 +1,25 @@
+{
+  "name": "gacsap-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/loader.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "inspect": "node --inspect=0.0.0.0:9229 src/loader.js",
+    "start_watch_inspect": "nodemon --delay 80ms --watch src/ --exec 'npm run inspect'"
+  },
+  "keywords": [],
+  "author": "Vinícius Queiroz Costa",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jest": "^26.1.0",
+    "mongoose": "^5.9.20",
+    "node-restful": "^0.2.6"
+  }
+}

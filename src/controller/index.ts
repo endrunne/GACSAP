@@ -26,14 +26,15 @@ export const getSingleClassroom = async ({ req }: { req: any }) => {
 }
 
 export const saveClassroom = async ({ req, res }: { req: any, res: any }) => {
-    const { 
-        normalSpacesQty,
+    const 
+    {
+        normalSpacesQty, 
         accessableSpacesQty,
         attributes
     } = req.body;
 
     const newClassrooms = await classrooms.insertOne({
-        normalSpacesQty,
+        normalSpacesQty, 
         accessableSpacesQty,
         attributes
     });

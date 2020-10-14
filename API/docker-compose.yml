@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  node:
+    container_name: node
+    image: "node:12"
+    build: ./
+    command: npm run start_watch_inspect
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+
+  mongodb:
+    container_name: mongodb
+    image: "mongo:latest"
+    environment:
+        MONGO-INITDB_DATABASE: csap_db
+        #MONGO_INITDB_ROOT_USERNAME: root
+        #MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+        - 27017:27017
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
