@@ -16,28 +16,35 @@ const ClassroomList = props => {
     const exibirLinhas = () => {
         //retorna a lista de props se existir
         const classrooms = Object.values(props.classrooms) || []
+        
         return classrooms.map((classroom, index) => (
             <tr key={index}>
-
-                {props.isAdmin ?
-                    <td>
-                        <button className="btn btn-success mr-2"
-                            onClick={() => props.editar(classroom)}>
-                            <i className="fa fa-check"></i>
-                        </button>
-                        <button className="btn btn-danger"
-                            onClick={() => props.deleteClassroom(classroom._id)}>
-                            <i className="fa fa-trash-o"></i>
-                        </button>
-                    </td>
-                :
                     <>
-                        <td>{classroom.codigo}</td>
-                        <td>{classroom.lugares}</td>
-                        <td>{classroom.lugaresAcessiveis}</td>
-                        <td>{classroom.isSalaAcessivel}</td>
+                        <td>{classroom.code}</td>
+                        <td>{classroom.name}</td>
+                        <td>{classroom.normalSpaces}</td>
+                        <td>{classroom.accessableSpaces}</td>
                     </>
+                    {props.isAdmin ?
+                    <>
+                        <td>
+                            <button className="btn btn-success mr-2"
+                                onClick={() => props.editar(classroom)}>
+                                <i className="fa fa-check"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button className="btn btn-danger"
+                                onClick={() => props.deleteClassroom(classroom._id)}>
+                                <i className="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </>
+                    :
+                        <>
+                        </>
                 }
+                
             </tr>
         ))
     }
@@ -48,13 +55,17 @@ const ClassroomList = props => {
                 <thead>
                     <tr>
                         <th>Código</th>
+                        <th>Nome</th>
                         <th>Lugares</th>
                         <th>Lugares Acessiveis</th>
-                        <th>Sala Acessivel?</th>
-                        {props.isAdmin ? <th></th> :
+                        {props.isAdmin ? 
                             <>
                                 <th>Editar</th>
                                 <th>Excluir</th>
+                            </>
+                            :
+                            <>
+                                <th></th>
                             </>
                         }
                     </tr>

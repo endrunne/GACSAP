@@ -4,7 +4,7 @@ import { ClassroomList } from '../../componentes/classroom/lista'
 
 import axios from 'axios'
 
-const URL = 'http://localhost:3000/api/v1/classrooms'
+const URL = 'http://localhost:3000/api/classrooms'
 
 export const HomePage = props => {
 

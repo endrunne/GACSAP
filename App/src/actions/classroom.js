@@ -8,7 +8,7 @@ import {
     TYPE_CLASSROOM_SELECIONAR
 } from '../reducers/classroom'
 
-const URL = 'http://localhost:3000/api/v1/classrooms/'
+const URL = 'http://localhost:3000/api/classrooms/'
 
 export const getClassroomList = () => {
     return async dispatch => {

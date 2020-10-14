@@ -25,10 +25,10 @@ const ClassroomForm = props => {
 
     const {
         _id,
-        codigo,
-        lugares,
-        lugaresAcessiveis,
-        isSalaAcessivel,
+        code,
+        name,
+        normalSpaces,
+        AccessibleSpaces,
 
         isAlteracao,
     
@@ -41,55 +41,42 @@ const ClassroomForm = props => {
             <h3 className="border-bottom">Formulário</h3>
             <form>
                 <div className="form-group row" style={styles.divInputGroup}>
-                    <label htmlFor="codigo"
+                    <label htmlFor="code"
                         className="col-sm-3 col-form-label">
                         Código:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="codigo"
-                            value={codigo}
+                            className="form-control" id="code"
+                            value={code}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="lugares"
+                    <label htmlFor="normalSpaces"
                         className="col-sm-3 col-form-label">
                         Lugares:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="lugares"
-                            value={lugares}
+                            className="form-control" id="normalSpaces"
+                            value={normalSpaces}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="lugaresAcessiveis"
+                    <label htmlFor="AccessibleSpaces"
                         className="col-sm-3 col-form-label">
                         Lugares Acessiveis:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="lugaresAcessiveis"
-                            value={lugaresAcessiveis}
+                            className="form-control" id="AccessibleSpaces"
+                            value={AccessibleSpaces}
                             onChange={setInputForms} />
                     </div>
-                </div>
-
-                <div className="form-group row">
-                    <label htmlFor="salaAcessivel"
-                        className="col-sm-3 col-form-label">
-                        A Sala é acessível?
-                    </label>
-                    <div className="col-sm-9" style={styles.divInputCenter}>
-                        <input type="checkbox"
-                            className="form-control" id="salaAcessivel"
-                            checked={isSalaAcessivel}
-                            onChange={setInputForms} />
-                    </div>  
                 </div>
 
                 <div className="form-group row">
@@ -104,9 +91,9 @@ const ClassroomForm = props => {
 }
 
 const mapStoreToProps = store => ({
-    codigo: store.classroom.codigo,
-    lugares: store.classroom.lugares,
-    lugaresAcessiveis: store.classroom.lugaresAcessiveis,
+    code: store.classroom.code,
+    normalSpaces: store.classroom.normalSpaces,
+    AccessibleSpaces: store.classroom.AccessibleSpaces,
     isSalaAcessivel: store.classroom.isSalaAcessivel
 })
 

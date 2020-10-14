@@ -1,16 +1,11 @@
-FROM endrunne/deno-mongodb:develop
+FROM node:12
 
-EXPOSE 3000
+COPY package*.json ./
 
-WORKDIR /app
-
-USER deno
+RUN npm install
 
 COPY . .
 
-RUN deno cache --unstable server.ts
+EXPOSE 3000
 
-CMD ["install", "--allow-read", "--allow-run", "--allow-write", "-f", "--unstable", "https://deno.land/x/denon/denon.ts"]
-
-CMD ["run", "--allow-net", "--allow-plugin", "--unstable", "--allow-read", "--allow-write", "server.ts"]
-
+CMD [ "node", "src/loader.js" ]
