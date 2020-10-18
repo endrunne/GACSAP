@@ -2,41 +2,42 @@ import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-    getClassroomList,
-    deleteClassroom,
-    selectClassroom
-} from '../../actions/classroom'
+    getGroupList,
+    deleteGroup,
+    selectGroup
+} from '../../actions/group'
 
-const ClassroomList = props => {
-    const {getClassroomList} = props
+const GroupList = props => {
+    const {getGroupList} = props
 
     useEffect(() => {
-        getClassroomList()
-    }, [getClassroomList])
+        getGroupList()
+    }, [getGroupList])
 
     const exibirLinhas = () => {
         //retorna a lista de props se existir
-        const classrooms = Object.values(props.classrooms) || []
+        const groups = Object.values(props.groups) || []
         
-        return classrooms.map((classroom, index) => (
+        return groups.map((group, index) => (
             <tr key={index}>
                     <>
-                        <td>{classroom.code}</td>
-                        <td>{classroom.name}</td>
-                        <td>{classroom.normalSpaces}</td>
-                        <td>{classroom.accessibleSpaces}</td>
+                        <td>{group.code}</td>
+                        <td>{group.name}</td>
+                        <td>{group.category}</td>
+                        <td>{group.students}</td>
+                        <td>{group.specialStudents}</td>
                     </>
                     {props.isAdmin ?
                     <>
                         <td>
                             <button className="btn btn-success mr-2"
-                                onClick={() => props.selectClassroom(classroom)}>
+                                onClick={() => props.selectGroup(group)}>
                                 <i className="fa fa-check"></i>
                             </button>
                         </td>
                         <td>
                             <button className="btn btn-danger"
-                                onClick={() => props.deleteClassroom(classroom._id)}>
+                                onClick={() => props.deleteGroup(group._id)}>
                                 <i className="fa fa-trash-o"></i>
                             </button>
                         </td>
@@ -44,7 +45,7 @@ const ClassroomList = props => {
                     :
                         <>
                         </>
-                }
+                    }
                 
             </tr>
         ))
@@ -57,8 +58,9 @@ const ClassroomList = props => {
                     <tr>
                         <th>Código</th>
                         <th>Nome</th>
-                        <th>Lugares</th>
-                        <th>Lugares Acessiveis</th>
+                        <th>Categoria</th>
+                        <th>Alunos</th>
+                        <th>Alunos Especiais</th>
                         {props.isAdmin ? 
                             <>
                                 <th>Editar</th>
@@ -79,15 +81,15 @@ const ClassroomList = props => {
 }
 
 const mapStoreToProps = store => ({
-    classrooms: store.classroom.classrooms
+    groups: store.group.groups
 })
 
 const mapActionsToProps = dispatch => bindActionCreators({
-    getClassroomList,
-    deleteClassroom,
-    selectClassroom
+    getGroupList,
+    deleteGroup,
+    selectGroup
 }, dispatch)
 
-const conectado = connect(mapStoreToProps, mapActionsToProps)(ClassroomList)
+const conectado = connect(mapStoreToProps, mapActionsToProps)(GroupList)
 
-export { conectado as ClassroomList}
+export { conectado as GroupList}
