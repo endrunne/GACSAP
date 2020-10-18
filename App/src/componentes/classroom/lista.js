@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
     getClassroomList,
-    deleteClassroom
+    deleteClassroom,
+    selectClassroom
 } from '../../actions/classroom'
 
 const ClassroomList = props => {
@@ -23,13 +24,13 @@ const ClassroomList = props => {
                         <td>{classroom.code}</td>
                         <td>{classroom.name}</td>
                         <td>{classroom.normalSpaces}</td>
-                        <td>{classroom.accessableSpaces}</td>
+                        <td>{classroom.accessibleSpaces}</td>
                     </>
                     {props.isAdmin ?
                     <>
                         <td>
                             <button className="btn btn-success mr-2"
-                                onClick={() => props.editar(classroom)}>
+                                onClick={() => props.selectClassroom(classroom)}>
                                 <i className="fa fa-check"></i>
                             </button>
                         </td>
@@ -65,7 +66,6 @@ const ClassroomList = props => {
                             </>
                             :
                             <>
-                                <th></th>
                             </>
                         }
                     </tr>
@@ -84,7 +84,8 @@ const mapStoreToProps = store => ({
 
 const mapActionsToProps = dispatch => bindActionCreators({
     getClassroomList,
-    deleteClassroom
+    deleteClassroom,
+    selectClassroom
 }, dispatch)
 
 const conectado = connect(mapStoreToProps, mapActionsToProps)(ClassroomList)

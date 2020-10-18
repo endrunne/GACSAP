@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Multiselect } from 'multiselect-react-dropdown'/*utilizar depois, no lugar de sala acessivel, trocar por atributos da sala*/
+//import { Multiselect } from 'multiselect-react-dropdown'/*utilizar depois, no lugar de sala acessivel, trocar por atributos da sala*/
 
 import {
     setInputForms,
@@ -28,13 +28,13 @@ const ClassroomForm = props => {
         code,
         name,
         normalSpaces,
-        AccessibleSpaces,
-
-        isAlteracao,
+        accessibleSpaces,
+        assignedGroup,
+        attributes,
     
         setInputForms,
         limpar,
-        salvarCurso} = props
+        saveClassroom} = props
 
     return (
         <div className="border-right pl-3 pr-3">
@@ -46,9 +46,22 @@ const ClassroomForm = props => {
                         Código:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
-                        <input type="number"
+                        <input type="text"
                             className="form-control" id="code"
                             value={code}
+                            onChange={setInputForms} />
+                    </div>
+                </div>
+
+                <div className="form-group row" style={styles.divInputGroup}>
+                    <label htmlFor="name"
+                        className="col-sm-3 col-form-label">
+                        Nome:
+                    </label>
+                    <div className="col-sm-9" style={styles.divInputCenter}>
+                        <input type="text"
+                            className="form-control" id="name"
+                            value={name}
                             onChange={setInputForms} />
                     </div>
                 </div>
@@ -74,15 +87,19 @@ const ClassroomForm = props => {
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
                             className="form-control" id="AccessibleSpaces"
-                            value={AccessibleSpaces}
+                            value={accessibleSpaces}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <button className="btn btn-primary ml-3 mb-3"
-                        onClick={e => saveClassroom(e, _id, )}>
-                        {isAlteracao ? "Atualizar" : "Adicionar"}
+                        onClick={e => saveClassroom(e, _id, code, name, normalSpaces, accessibleSpaces, attributes) }>
+                        {_id ? "Atualizar" : "Adicionar"}
+                    </button>
+                    <button className="btn btn-secondary ml-3 mb-3"
+                        onClick={limpar}>
+                        Limpar
                     </button>
                 </div>
             </form>
@@ -91,10 +108,13 @@ const ClassroomForm = props => {
 }
 
 const mapStoreToProps = store => ({
+    _id: store.classroom._id,
     code: store.classroom.code,
+    name: store.classroom.name,
+    assignedGroup: store.classroom.assignedGroup,
     normalSpaces: store.classroom.normalSpaces,
-    AccessibleSpaces: store.classroom.AccessibleSpaces,
-    isSalaAcessivel: store.classroom.isSalaAcessivel
+    accessibleSpaces: store.classroom.accessibleSpaces,
+    attributes: store.classroom.attributes
 })
 
 const mapActionToProps = dispatch => bindActionCreators({
