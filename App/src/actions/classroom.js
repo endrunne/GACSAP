@@ -96,7 +96,7 @@ export const saveClassroom = (evento, _id, code, name, normalSpaces, accessibleS
 
             dispatch(limpar())
             dispatch(getClassroomList())
-            dispatch(setSuccessMessage(`Curso ${msg} com sucesso!`))
+            dispatch(setSuccessMessage(`Sala de aula ${msg} com sucesso!`))
         }catch(e){
             console.log(e)
             dispatch(setErrorMessage('Erro ao salvar a sala!'))
