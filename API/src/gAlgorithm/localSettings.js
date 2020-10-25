@@ -1,3 +1,4 @@
+const settings = require('./GASettings');
 var getOptions, getSettingsDefaults;
 
 const LocalSettingsSet = function(options, settingsDefaults) {
@@ -5,9 +6,8 @@ const LocalSettingsSet = function(options, settingsDefaults) {
     getSettingsDefaults = settingsDefaults;
 }
 
-const LocalSettings = function() {
+const LocalSettings = function() {    
     return settings(getOptions, getSettingsDefaults);
 }
 
-module.exports = LocalSettingsSet;
-module.exports = LocalSettings;
+module.exports = {LocalSettingsSet, LocalSettings};

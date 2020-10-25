@@ -8,7 +8,7 @@ const Settings = function(settings, defaults) {
     settings.populationFunction   =   settings.populationFunction || defaults.populationFunction
     settings.population           =   settings.population         || defaults.population
 
-    if ( settings.population.length <= 0 )
+    if (settings.population.length <= 0 )
         throw Error("population must be an array and contain at least 1 phenotypes")
 
     settings.populationSize = settings.populationSize || defaults.populationSize

@@ -1,15 +1,14 @@
-const {settingsDefaults} = require('./gAlgorithm/GAConstructor.js')
-const {mutate}           = require('./gAlgorithm/mutationFunction/index.js')
-const {crossover}        = require('./gAlgorithm/crossoverFunction/index.js')
-const {doesABeatB}       = require('./gAlgorithm/doesABeatBFunction/index.js')
-const {cloneJSON}        = require('./gAlgorithm/services/index.js')
-const {localSettingsSet} = require('./gAlgorithm/localSettings.js')
-const {localSettings}    = require('./gAlgorithm/localSettings.js')
+const settingsDefaults = require('./gAlgorithm/GAConstructor.js')
+const mutate           = require('./gAlgorithm/mutationFunction/index.js')
+const crossover        = require('./gAlgorithm/crossoverFunction/index.js')
+const doesABeatB       = require('./gAlgorithm/doesABeatBFunction/index.js')
+const cloneJSON        = require('./gAlgorithm/services/index.js')
+const localSettings    = require('./gAlgorithm/localSettings.js')
 
-module.exports = geneticAlgorithmConstructor => { function geneticAlgorithmConstructor(options) {
-    localSettingsSet(options, settingsDefaults())
-    var settings = localSettings()
-
+const geneticAlgorithmConstructor = function (options) {
+    localSettings.LocalSettingsSet(options, settingsDefaults())
+    var settings = localSettings.LocalSettings();
+    
     function populate () {
         var size = settings.population.length
         while(settings.population.length < settings.populationSize) {
@@ -89,4 +88,5 @@ module.exports = geneticAlgorithmConstructor => { function geneticAlgorithmConst
         }
     }
 }
-}
+
+module.exports = geneticAlgorithmConstructor;

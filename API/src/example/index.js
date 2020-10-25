@@ -22,7 +22,7 @@ const geneticAlgorithmConstructor = require('../index.js')
             else { duplicates[JSON.stringify(item)] = true ; return true }
         })
     }
-    
+
     function crossoverFunction(phenotypeA, phenotypeB) {
         var index = Math.round( Math.random() * phenotypeA.length )
 
@@ -79,7 +79,7 @@ const geneticAlgorithmConstructor = require('../index.js')
         if (geneticAlgorithm != null)
             resolve()
         else
-            reject()
+           reject()
 
     }).then(() => {
         console.log("Starting with:")
@@ -87,7 +87,7 @@ const geneticAlgorithmConstructor = require('../index.js')
         var best = []
         var previousBestScore = 0
         for( var a = 0 ; a < 100 ; a++ ) {
-           for( var i = 0 ; i < 25 ; i++ ) geneticAlgorithm.evolve()
+           for( var i = 0 ; i < 25 ; i++ ) geneticAlgorithm.evolve();
            var score = geneticAlgorithm.bestScore()
 
            if ( score == previousBestScore ) {

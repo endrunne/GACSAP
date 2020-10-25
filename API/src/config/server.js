@@ -10,11 +10,10 @@ server.use(bodyParser.urlencoded({ extended:true}))
 server.use(bodyParser.json())
 server.use(cors)
 
-const ExecuteRoutine = 
-    example().then((data) => {
-        console.log(data);
-    }).catch((error) => {
-        console.error(error);});
+const ExecuteRoutine =
+    Promise.resolve(example());
+
+console.log(ExecuteRoutine);
 
 server.listen(port, _ => console.log(`Servidor no ar na porta ${port}`))
 
