@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux'
 
 import {
     setInputForms,
-    saveClassroom
-} from '../../actions/classroom'
+    saveGroup
+} from '../../actions/group'
 
 var styles = {
     divInputGroup : {
@@ -21,20 +21,20 @@ var styles = {
     }
 }
 
-const ClassroomForm = props => {
+const GroupForm = props => {
 
     const {
         _id,
         code,
         name,
-        normalSpaces,
-        accessibleSpaces,
-        assignedGroup,
+        students,
+        specialStudents,
+        category,
         attributes,
     
         setInputForms,
         limpar,
-        saveClassroom} = props
+        saveGroup} = props
 
     return (
         <div className="border-right pl-3 pr-3">
@@ -66,37 +66,51 @@ const ClassroomForm = props => {
                     </div>
                 </div>
 
-                <div className="form-group row">
-                    <label htmlFor="normalSpaces"
+                <div className="form-group row" style={styles.divInputGroup}>
+                    <label htmlFor="category"
                         className="col-sm-3 col-form-label">
-                        Lugares:
+                        Categoria:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
-                        <input type="number"
-                            className="form-control" id="normalSpaces"
-                            value={normalSpaces}
+                        <input type="text"
+                            className="form-control" id="category"
+                            value={category}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="AccessibleSpaces"
+                    <label htmlFor="students"
                         className="col-sm-3 col-form-label">
-                        Lugares Acessiveis:
+                        Alunos:
                     </label>
                     <div className="col-sm-9" style={styles.divInputCenter}>
                         <input type="number"
-                            className="form-control" id="AccessibleSpaces"
-                            value={accessibleSpaces}
+                            className="form-control" id="students"
+                            value={students}
+                            onChange={setInputForms} />
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <label htmlFor="specialStudents"
+                        className="col-sm-3 col-form-label">
+                        Alunos portadores de necessidades especiais:
+                    </label>
+                    <div className="col-sm-9" style={styles.divInputCenter}>
+                        <input type="number"
+                            className="form-control" id="specialStudents"
+                            value={specialStudents}
                             onChange={setInputForms} />
                     </div>
                 </div>
 
                 <div className="form-group row">
                     <button className="btn btn-primary ml-3 mb-3"
-                        onClick={e => saveClassroom(e, _id, code, name, normalSpaces, accessibleSpaces, attributes) }>
+                        onClick={e => saveGroup(e, _id, code, name, students, specialStudents, category, attributes) }>
                         {_id ? "Atualizar" : "Adicionar"}
                     </button>
+                    
                     <button className="btn btn-secondary ml-3 mb-3"
                         onClick={limpar}>
                         Limpar
@@ -108,19 +122,19 @@ const ClassroomForm = props => {
 }
 
 const mapStoreToProps = store => ({
-    _id: store.classroom._id,
-    code: store.classroom.code,
-    name: store.classroom.name,
-    assignedGroup: store.classroom.assignedGroup,
-    normalSpaces: store.classroom.normalSpaces,
-    accessibleSpaces: store.classroom.accessibleSpaces,
-    attributes: store.classroom.attributes
+    _id: store.group._id,
+    code: store.group.code,
+    name: store.group.name,
+    students: store.group.students,
+    specialStudents: store.group.specialStudents,
+    category: store.group.category,
+    attributes: store.group.attributes
 })
 
 const mapActionToProps = dispatch => bindActionCreators({
     setInputForms,
-    saveClassroom
+    saveGroup
 }, dispatch)
 
-const conectado = connect(mapStoreToProps, mapActionToProps)(ClassroomForm)
-export {conectado as ClassroomForm}
+const conectado = connect(mapStoreToProps, mapActionToProps)(GroupForm)
+export {conectado as GroupForm}

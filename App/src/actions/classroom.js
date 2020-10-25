@@ -5,7 +5,7 @@ import {
     TYPE_CLASSROOM_SET_SUCCESS_MESSAGE,
     TYPE_CLASSROOM_SET_FORM,
     TYPE_CLASSROOM_LIMPAR,
-    TYPE_CLASSROOM_SELECIONAR
+    TYPE_CLASSROOM_SELECT
 } from '../reducers/classroom'
 
 const URL = 'http://localhost:3000/api/classrooms/'
@@ -51,7 +51,7 @@ export const deleteClassroom = _id => {
     return async dispatch => {
         if (window.confirm('Deseja realmente excluir a sala selecionada?')) {
             try {
-                await axios.delete(URL + '/' + _id)
+                await axios.delete(URL + _id)
                 dispatch(getClassroomList())
                 dispatch(setSuccessMessage('Sala deletada com sucesso'))
             } catch (e) {
@@ -62,6 +62,11 @@ export const deleteClassroom = _id => {
     }
 }
 
+export const selectClassroom = classroom => ({
+    type: TYPE_CLASSROOM_SELECT,
+    payload: classroom
+})
+
 export const limpar = e => {
     if(e)
         e.preventDefault()
@@ -71,18 +76,18 @@ export const limpar = e => {
     }
 }
 
-export const saveClassroom = (evento, _id, classroom) => {
+export const saveClassroom = (evento, _id, code, name, normalSpaces, accessibleSpaces, attributes = []) => {
     return async dispatch => {
         evento.preventDefault()
         try{
-            if(!classroom.normalSpaces || !classroom.accessableSpaces || !classroom.code || !classroom.name ){
+            if(!code || !name || !normalSpaces || !accessibleSpaces ){
                 dispatch(setErrorMessage("Favor preencher todos os campos obrigatórios!"))
             }
 
-            const body = { classroom }
+            const body = { code, name, normalSpaces, accessibleSpaces, attributes}
             let msg = ''
             if(_id){
-                await axios.put(URL + "/" + _id, body)
+                await axios.put(URL + _id, body)
                 msg = "atualizado"
             } else {
                 await axios.post(URL, body)
@@ -91,7 +96,7 @@ export const saveClassroom = (evento, _id, classroom) => {
 
             dispatch(limpar())
             dispatch(getClassroomList())
-            dispatch(setSuccessMessage(`Curso ${msg} com sucesso!`))
+            dispatch(setSuccessMessage(`Sala de aula ${msg} com sucesso!`))
         }catch(e){
             console.log(e)
             dispatch(setErrorMessage('Erro ao salvar a sala!'))

@@ -22,6 +22,9 @@ const Menu = props => {
                         <Link className="nav-link" to="/classroom">Salas de Aula</Link>
                     </li>
                     <li className="nav-item">
+                        <Link className="nav-link" to="/group">Turmas</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link" to="/contato">Contato</Link>
                     </li>
                 </ul> 
