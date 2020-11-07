@@ -7,7 +7,7 @@ const geneticAlgorithmConstructor = require('../index.js')
         var temp = phenotype[ gene1_index ]
         phenotype[ gene1_index ] = phenotype[ gene2_index ]
         phenotype[ gene2_index ] = temp
-        //console.log("mutant = " + JSON.stringify(phenotype))
+        console.log("mutant = " + JSON.stringify(phenotype))
         return phenotype
     }
 
@@ -71,7 +71,7 @@ const geneticAlgorithmConstructor = require('../index.js')
         geneticAlgorithm = geneticAlgorithmConstructor({
            mutationFunction: mutationFunction,
            crossoverFunction: crossoverFunction,
-        //    fitnessFunction: fitnessFunction,
+           fitnessFunction: fitnessFunction,
            population: [ firstPhenotype ],
            populationSize:1000
         });
