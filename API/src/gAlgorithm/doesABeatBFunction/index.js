@@ -2,10 +2,11 @@ const LocalSettings = require("../localSettings.js");
 
 const DoesABeatB = function(a, b) {
     var doesABeatB = false;
-    if ( LocalSettings.LocalSettings().doesABeatBFunction ) {
-        return LocalSettings.LocalSettings().doesABeatBFunction(a,b)
+    var settings = LocalSettings.LocalSettings();
+    if (settings.doesABeatBFunction ) {
+        return settings.doesABeatBFunction(a,b)
     } else {
-        return LocalSettings.LocalSettings().fitnessFunction(a) >= LocalSettings.LocalSettings().fitnessFunction(b)
+        return settings.fitnessFunction(a) >= settings.fitnessFunction(b)
     }
 }
 
