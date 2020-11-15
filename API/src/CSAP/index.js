@@ -3,6 +3,25 @@
     
     let json = {};
 
+    var getGroupsPhenotype = async function() {
+        let url = 'http://localhost:3000/api/classrooms';
+        await fetch(url)
+        .then(res => res.json())
+        .then((groupData) => {
+            console.log(`RRRRRR: ${JSON.stringify(groupData)}`)
+            // return groupData;
+        })
+        .catch(err => {throw err});
+    }
+
+    var getClassroomsPhenotype = async function() {        
+        let url = 'http://localhost:3000/api/groups';
+        await fetch(url)
+        .then(res => res.json())
+        .then((clasroomData) => {return clasroomData;})
+        .catch(err => {throw err});
+    }
+
     const csap = function() {
         var mutationFunction = function( phenotype ) {
         return phenotype;
@@ -82,7 +101,7 @@
     var groupFuntion = function(phenotype) {
         json = phenotype;
     }    
-
+    
     var geneticAlgorithm;
 
     return new Promise (function(resolve, reject) {
