@@ -3,21 +3,6 @@
     
     let json = {};
 
-    var classRoomPhenotype = {
-        normalSpaces: 7,
-        accessibleSpaces: 0,
-        code: "F-24",
-        name: "Sala de aula",
-        assignedGroup: "",
-        attributes: [
-            {
-                attributeName: "",
-                attributeDisplayName: "",
-                attributeValue: ""
-            }
-        ]
-    };
-
     const csap = function() {
         var mutationFunction = function( phenotype ) {
         return phenotype;
@@ -55,7 +40,7 @@
                 name: "Ciência da computação",
                 category: "Exatas"
             }
-        ]
+        ]               
 
         phenotype = {
             normalSpaces: 7,
@@ -82,7 +67,7 @@
                 score = 10;
                 phenotype.assignedGroup = groupPhenotype[i].code;
                 groupFuntion(phenotype);
-                break;//console.log(`Score perfeito: ${score}`);
+                break;
             }
             else if (phenotype.normalSpaces == students && phenotype.accessibleSpaces <= specialStudents)
                 score = 8;
@@ -91,15 +76,6 @@
             else if (phenotype.normalSpaces > students && phenotype.accessibleSpaces > specialStudents)
                 score = 0;
         }
-
-        if (score == 10) {
-            // console.log(`Score perfeito: ${score}`);
-            // phenotype.assignedGroup = groupPhenotype.code;
-            // score = phenotype.normalSpaces;
-        }
-
-        // console.log(`score value: ${score}`);
-
         return score
     }
 
@@ -117,20 +93,15 @@
            population: [ json ],
            populationSize:100
         });
-        // console.log(`TTTTTTTTTTTTTTTT : ${JSON.stringify(classRoomPhenotype)}`);
         if (geneticAlgorithm != null)
             resolve()
         else
            reject()
 
     }).then(() => {
-        // console.log("Starting with:")
-        // console.log( classRoomPhenotype )
         for( var i = 0 ; i < 100 ; i++ ) geneticAlgorithm.evolve()
         var best = geneticAlgorithm.best()
-        // console.log(`CSAP best: ${best}`);
         delete best.score
-        // console.log("Finished with:")
         return best;
     }).catch((error) => {console.error(error);})
 }
