@@ -61,9 +61,14 @@ const geneticAlgorithmConstructor = function (options) {
         },
         best : function() {
             var scored = this.scoredPopulation()
+            // console.log(scored);
             var result = scored.reduce(function(a,b) {
+                // console.log(`a score:${a.score}`);
+                // console.log(`b score:${b.score}`);
                 return a.score >= b.score ? a : b
             }, scored[0]).phenotype
+            // console.log(result);
+            // console.log(scored);
             return cloneJSON(result)
         },
         bestScore : function() {
