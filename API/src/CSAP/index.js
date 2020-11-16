@@ -97,6 +97,27 @@
         }
         return score
     }
+<<<<<<< Updated upstream
+=======
+    
+    let urlClassrooms = 'https://localhost:3001/api/classrooms';
+    let urlGroups = 'https://localhost:3001/api/groups';
+
+    let classRoomPhenotype = {};
+    let groupPhenotype = {};
+
+    /*fetch(urlClassrooms)
+    .then(res => res.json()).then((classRoom) => {
+        console.log('Checkout this JSON! ', classRoom);
+        classRoomPhenotype = classRoom;
+    }).catch(err => { throw err });*/
+
+    /*fetch(urlGroups)
+    .then(res => res.json()).then((groups) => {
+        console.log('Checkout this JSON! ', groups);
+        groupPhenotype = groups;
+    }).catch(err => { throw err });*/
+>>>>>>> Stashed changes
 
     var groupFuntion = function(phenotype) {
         json = phenotype;
