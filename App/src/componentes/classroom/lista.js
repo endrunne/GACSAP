@@ -25,8 +25,9 @@ const ClassroomList = props => {
                         <td>{classroom.name}</td>
                         <td>{classroom.normalSpaces}</td>
                         <td>{classroom.accessibleSpaces}</td>
+                        <td>{classroom.assignedGroup}</td>
                     </>
-                    {props.isAdmin ?
+                {props.isAdmin ?
                     <>
                         <td>
                             <button className="btn btn-success mr-2"
@@ -45,7 +46,20 @@ const ClassroomList = props => {
                         <>
                         </>
                 }
-                
+                {props.isAssignment ?
+                    <>
+                        <td>
+                        
+                            <button className="btn btn-warning mr-2"
+                                onClick={() => props.searchGroup(classroom)}>
+                                <i className="fa fa-bookmark"></i>
+                            </button>
+                        </td>
+                    </>
+                    :
+                    <>
+                    </>
+                }
             </tr>
         ))
     }
@@ -59,10 +73,19 @@ const ClassroomList = props => {
                         <th>Nome</th>
                         <th>Lugares</th>
                         <th>Lugares Acessiveis</th>
+                        <th>Turma Atribuída</th>
                         {props.isAdmin ? 
                             <>
                                 <th>Editar</th>
                                 <th>Excluir</th>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
+                        {props.isAssignment ?
+                            <>
+                                <th>Escolher Turma</th>
                             </>
                             :
                             <>
