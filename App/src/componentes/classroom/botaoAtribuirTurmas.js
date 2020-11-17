@@ -6,10 +6,11 @@ import { searchGroups } from '../../actions/classroom'
 
 const BotaoAtribuir = props => {
 
+    const { searchGroups } = props
 
     return(
         <button className="btn btn-secondary ml-3 mb-3"
-            onClick={e => searchGroups(e)}>
+            onClick={searchGroups}>
             Atribuir Turmas
         </button>
     )

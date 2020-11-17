@@ -98,6 +98,8 @@
         return score
     }
     
+    let urlClassrooms = 'https://localhost:3000/api/classrooms';
+    let urlGroups = 'https://localhost:3000/api/groups';
 
     let classRoomPhenotype = {};
     let groupPhenotype = {};

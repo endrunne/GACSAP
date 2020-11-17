@@ -104,6 +104,16 @@ export const saveClassroom = (evento, _id, code, name, normalSpaces, accessibleS
 
 export const searchGroups = (evento) => {
     return async dispatch => {
+        if (window.confirm('Deseja realmente atribuir as turmas?')) {
+            try {
+                await axios.get(URL + "assignGroups/")
+                dispatch(getClassroomList())
+                dispatch(setSuccessMessage('Turmas atribuídas com sucesso'))
+            } catch (e) {
+                console.log(e)
+                dispatch(setErrorMessage('Erro ao atribuir turmas'))
+            }
         }
     }
+}
 
