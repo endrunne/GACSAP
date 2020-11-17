@@ -6,7 +6,6 @@ import { searchGroups } from '../../actions/classroom'
 
 const BotaoAtribuir = props => {
 
-    const {} = props
 
     return(
         <button className="btn btn-secondary ml-3 mb-3"

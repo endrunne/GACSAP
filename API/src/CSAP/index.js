@@ -97,11 +97,7 @@
         }
         return score
     }
-<<<<<<< Updated upstream
-=======
     
-    let urlClassrooms = 'https://localhost:3001/api/classrooms';
-    let urlGroups = 'https://localhost:3001/api/groups';
 
     let classRoomPhenotype = {};
     let groupPhenotype = {};
@@ -117,7 +113,6 @@
         console.log('Checkout this JSON! ', groups);
         groupPhenotype = groups;
     }).catch(err => { throw err });*/
->>>>>>> Stashed changes
 
     var groupFuntion = function(phenotype) {
         json = phenotype;
