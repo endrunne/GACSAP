@@ -74,7 +74,7 @@ export const limpar = e => {
     }
 }
 
-export const saveClassroom = (evento, _id, code, name, normalSpaces, accessibleSpaces, attributes = []) => {
+export const saveClassroom = (evento, _id, code, name, normalSpaces, assignedGroup, accessibleSpaces, attributes = []) => {
     return async dispatch => {
         evento.preventDefault()
         try{
@@ -82,7 +82,7 @@ export const saveClassroom = (evento, _id, code, name, normalSpaces, accessibleS
                 dispatch(setErrorMessage("Favor preencher todos os campos obrigatórios!"))
             }
 
-            const body = { code, name, normalSpaces, accessibleSpaces, attributes}
+            const body = { code, name, normalSpaces, assignedGroup, accessibleSpaces, attributes}
             let msg = ''
             if(_id){
                 await axios.put(URL + _id, body)

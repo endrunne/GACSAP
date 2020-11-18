@@ -94,7 +94,7 @@ const ClassroomForm = props => {
 
                 <div className="form-group row">
                     <button className="btn btn-primary ml-3 mb-3"
-                        onClick={e => saveClassroom(e, _id, code, name, normalSpaces, accessibleSpaces, attributes) }>
+                        onClick={e => saveClassroom(e, _id, code, name, normalSpaces, assignedGroup, accessibleSpaces, attributes) }>
                         {_id ? "Atualizar" : "Adicionar"}
                     </button>
                     <button className="btn btn-secondary ml-3 mb-3"
