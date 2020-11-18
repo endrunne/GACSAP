@@ -13,10 +13,8 @@ const URL = 'http://localhost:3000/api/classrooms/'
 export const getClassroomList = () => {
     return async dispatch => {
         try {
-
             const result = await axios.get(URL)
             if (result.data) {
-                console.log(result.data)
                 return dispatch({
                     type: TYPE_CLASSROOM_SET_LIST,
                     value: result.data
@@ -103,3 +101,19 @@ export const saveClassroom = (evento, _id, code, name, normalSpaces, accessibleS
         }
     }
 }
+
+export const searchGroups = (evento) => {
+    return async dispatch => {
+        if (window.confirm('Deseja realmente atribuir as turmas?')) {
+            try {
+                await axios.get(URL + "assignGroups/")
+                dispatch(getClassroomList())
+                dispatch(setSuccessMessage('Turmas atribuídas com sucesso'))
+            } catch (e) {
+                console.log(e)
+                dispatch(setErrorMessage('Erro ao atribuir turmas'))
+            }
+        }
+    }
+}
+
