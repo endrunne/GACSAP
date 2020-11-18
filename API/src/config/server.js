@@ -3,11 +3,7 @@ const port = 3000
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('./cors')
-<<<<<<< Updated upstream
-=======
 const debug = require('./debug')
-// const example = require('../example/index.js')
->>>>>>> Stashed changes
 const csap = require('../CSAP/index.js')
 const server = express()
 

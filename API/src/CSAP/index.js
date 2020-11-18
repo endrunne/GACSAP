@@ -89,61 +89,50 @@
 
             for (var i = 0; i < groupPhenotype.length; i++)
             {
+                console.log(`RRRRRRRRRRR: ${JSON.stringify(groupPhenotype)}`);
+
                 var students = groupPhenotype[i].students;
                 var specialStudents = groupPhenotype[i].specialStudents;
 
                 if (phenotype[i].normalSpaces == students && phenotype[i].accessibleSpaces == specialStudents)
                 {    
                     score = 10;
+                    console.log(`ANTESSSSS: ${JSON.stringify(phenotype[i])}`);
+                    console.log(`CODEEEEE: ${groupPhenotype[i].code}`); // Problema ta aqui
                     phenotype[i].assignedGroup = groupPhenotype[i].code;
+                    console.log(`DEPOISSSS: ${JSON.stringify(phenotype[i])}`);
                     groupFuntion(phenotype[i]);
-                    continue;
+                    break;
                 }
                 else if (phenotype[i].normalSpaces == students && phenotype[i].accessibleSpaces <= specialStudents)
                 {   
                     score = 8;
                     phenotype[i].assignedGroup = groupPhenotype[i].code;
                     groupFuntion(phenotype[i]);
-                    continue;
+                    break;
                 }
                 else if (phenotype[i].normalSpaces <= students && phenotype[i].accessibleSpaces <= specialStudents)
                 {    
                     score = 5;
                     phenotype[i].assignedGroup = groupPhenotype[i].code;
-                    groupFuntion(phenotype[i])
+                    groupFuntion(phenotype[i]);
+                    break;
                 }
                 else if (phenotype[i].normalSpaces > students && phenotype[i].accessibleSpaces > specialStudents)
                 {    
                     score = 0;
                     phenotype[i].assignedGroup = groupPhenotype[i].code;
                     groupFuntion(phenotype[i]);
+                    break;
                 }
             }
         }).catch(err => {throw err});        
         return score
     }
-    
-    let urlClassrooms = 'https://localhost:3000/api/classrooms';
-    let urlGroups = 'https://localhost:3000/api/groups';
-
-    let classRoomPhenotype = {};
-    let groupPhenotype = {};
-
-    /*fetch(urlClassrooms)
-    .then(res => res.json()).then((classRoom) => {
-        console.log('Checkout this JSON! ', classRoom);
-        classRoomPhenotype = classRoom;
-    }).catch(err => { throw err });*/
-
-    /*fetch(urlGroups)
-    .then(res => res.json()).then((groups) => {
-        console.log('Checkout this JSON! ', groups);
-        groupPhenotype = groups;
-    }).catch(err => { throw err });*/
 
     var groupFuntion = function(phenotype) {
-        json.push(phenotype);
-        console.log(JSON.stringify(json));
+        json.push(phenotype);  
+        // console.log(JSON.stringify(phenotype));
     }            
 
     var geneticAlgorithm;
@@ -164,7 +153,7 @@
     }).then(() => {
         for( var i = 0 ; i < 100 ; i++ ) geneticAlgorithm.evolve()
         var best = geneticAlgorithm.best()
-        delete best.score
+        delete best.score        
         return best;
     }).catch((error) => {console.error(error);})
 }
