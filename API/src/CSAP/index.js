@@ -36,94 +36,56 @@
     var fitnessFunction = async function(phenotype) {
         var score = 0
         // use your phenotype data to figure out a fitness score
-
-        // Mock for tests
-        // var groupPhenotype = 
-        // [
-        //     {
-        //         students: 6,
-        //         specialStudents: 2,
-        //         code: "CC7P17",
-        //         name: "Ciência da computação",
-        //         category: "Exatas"
-        //     },
-        //     {
-        //         students: 7,
-        //         specialStudents: 2,
-        //         code: "CC8P17",
-        //         name: "Ciencia da computacao",
-        //         category: "Exatas"                
-        //     },
-        //     {
-        //         students: 10,
-        //         specialStudents: 5,
-        //         code: "CC5P18",
-        //         name: "Ciência da computação",
-        //         category: "Exatas"
-        //     }
-        // ]               
-
-        // phenotype = {
-        //     normalSpaces: 7,
-        //     accessibleSpaces: 2,
-        //     code: "F-24",
-        //     name: "Sala de aula",
-        //     assignedGroup: { type: String},
-        //     attributes: [
-        //         {
-        //             attributeName: "",
-        //             attributeDisplayName: "",
-        //             attributeValue: ""
-        //         }
-        //     ]
-        // };
-
         let promise = Promise.all([getClassroomsPhenotype(), getGroupsPhenotype()]);
-
         promise.then(([classroomData, groupData]) => {
             let groupPhenotype = [];
             groupPhenotype.push(groupData);
             
             phenotype = [];
-            phenotype.push(classroomData);
-
-            for (var i = 0; i < groupPhenotype.length; i++)
+            phenotype.push(classroomData);        
+                        
+            for (var i = 0; i < phenotype[0].length; i++)
             {
-                console.log(`RRRRRRRRRRR: ${JSON.stringify(groupPhenotype)}`);
+                var group = groupPhenotype[0];
+                var classroom = phenotype[0];
 
-                var students = groupPhenotype[i].students;
-                var specialStudents = groupPhenotype[i].specialStudents;
+                // Group local variables
+                var code = group[i].code;
+                var students = group[i].students;
+                var specialStudents = group[i].specialStudents;                
 
-                if (phenotype[i].normalSpaces == students && phenotype[i].accessibleSpaces == specialStudents)
+                // Classroom local variables
+                var assignedGroup = classroom[i].assignedGroup;
+                var normalSpaces = classroom[i].normalSpaces;
+                var accessibleSpaces = classroom[i].accessibleSpaces;
+
+                if (normalSpaces == students && accessibleSpaces == specialStudents)
                 {    
                     score = 10;
-                    console.log(`ANTESSSSS: ${JSON.stringify(phenotype[i])}`);
-                    console.log(`CODEEEEE: ${groupPhenotype[i].code}`); // Problema ta aqui
-                    phenotype[i].assignedGroup = groupPhenotype[i].code;
-                    console.log(`DEPOISSSS: ${JSON.stringify(phenotype[i])}`);
-                    groupFuntion(phenotype[i]);
-                    break;
+                    assignedGroup = code;
+                    groupFuntion(classroom[i]);
+                    continue;
                 }
-                else if (phenotype[i].normalSpaces == students && phenotype[i].accessibleSpaces <= specialStudents)
+                else if (normalSpaces == students && specialStudents <= accessibleSpaces)
                 {   
                     score = 8;
-                    phenotype[i].assignedGroup = groupPhenotype[i].code;
-                    groupFuntion(phenotype[i]);
-                    break;
+                    assignedGroup = code;
+                    groupFuntion(classroom[i]);
+                    continue;
                 }
-                else if (phenotype[i].normalSpaces <= students && phenotype[i].accessibleSpaces <= specialStudents)
+                else if (students <= normalSpaces && specialStudents <= accessibleSpaces)
                 {    
                     score = 5;
-                    phenotype[i].assignedGroup = groupPhenotype[i].code;
-                    groupFuntion(phenotype[i]);
-                    break;
+                    assignedGroup = code;
+                    groupFuntion(classroom[i]);
+                    continue;
                 }
-                else if (phenotype[i].normalSpaces > students && phenotype[i].accessibleSpaces > specialStudents)
+                else if (normalSpaces > students && accessibleSpaces > specialStudents)
                 {    
                     score = 0;
-                    phenotype[i].assignedGroup = groupPhenotype[i].code;
-                    groupFuntion(phenotype[i]);
-                    break;
+                    assignedGroup = code;
+                    groupFuntion(classroom[i]);
+                    continue;
                 }
             }
         }).catch(err => {throw err});        
@@ -132,7 +94,6 @@
 
     var groupFuntion = function(phenotype) {
         json.push(phenotype);  
-        // console.log(JSON.stringify(phenotype));
     }            
 
     var geneticAlgorithm;
@@ -143,7 +104,7 @@
            crossoverFunction: crossoverFunction,
            fitnessFunction: fitnessFunction,
            population: [ json ],
-           populationSize:100
+           populationSize:3
         });
         if (geneticAlgorithm != null)
             resolve()
@@ -151,7 +112,7 @@
            reject()
 
     }).then(() => {
-        for( var i = 0 ; i < 100 ; i++ ) geneticAlgorithm.evolve()
+        for( var i = 0 ; i < json.length ; i++ ) geneticAlgorithm.evolve()
         var best = geneticAlgorithm.best()
         delete best.score        
         return best;
