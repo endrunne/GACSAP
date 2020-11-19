@@ -58,6 +58,7 @@ export default function(state = INITIAL_STATE, acao){
                 code: acao.payload.code,
                 name: acao.payload.name,
                 normalSpaces: acao.payload.normalSpaces,
+                assignedGroup: acao.payload.assignedGroup,
                 accessibleSpaces: acao.payload.accessibleSpaces,
                 attributes: acao.payload.attributes,
                 successMessage: '',

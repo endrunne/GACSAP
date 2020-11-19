@@ -60,7 +60,7 @@ const geneticAlgorithmConstructor = function (options) {
             return this
         },
         best : function() {
-            var scored = this.scoredPopulation()
+            var scored = this.scoredPopulation()            
             var result = scored.reduce(function(a,b) {
                 return a.score >= b.score ? a : b
             }, scored[0]).phenotype

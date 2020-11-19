@@ -3,24 +3,20 @@ const port = 3000
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('./cors')
-// const example = require('../example/index.js')
+const debug = require('./debug')
 const csap = require('../CSAP/index.js')
 const server = express()
 
 server.use(bodyParser.urlencoded({ extended:true}))
 server.use(bodyParser.json())
 server.use(cors)
-
-// const ExecuteRoutine =
-//     Promise.resolve(example());
-
-// console.log(ExecuteRoutine);
-
-const CSAPRoutine =
-    Promise.resolve(csap());
-
-console.log(CSAPRoutine);
+server.use(debug)
 
 server.listen(port, _ => console.log(`Servidor no ar na porta ${port}`))
+
+server.get("/api/classrooms/assignGroups", async(req, res) => {
+    const csapPromiseResolved = await Promise.resolve(csap());        
+    res.json(JSON.stringify(csapPromiseResolved));
+})
 
 module.exports = server
