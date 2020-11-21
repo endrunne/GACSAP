@@ -60,7 +60,8 @@ const csap = function() {
                         possibleAssigns.map( possibleAssign => {
                             possibleAssign.score = (phenotype[possibleAssign.index].normalSpaces - group.students)
                             possibleAssign.score += (phenotype[possibleAssign.index].accessibleSpaces - group.specialStudents)
-                        })
+                        }
+                    )
         
                         /* Ordenando desc o array atraves do score */
                         possibleAssigns.sort( (a, b) => {
@@ -98,7 +99,6 @@ const csap = function() {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('Success:', data);
         })
         .catch((error) => {
             console.error('Error:', error);

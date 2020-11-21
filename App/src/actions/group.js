@@ -16,7 +16,6 @@ export const getGroupList = () => {
 
             const result = await axios.get(URL)
             if (result.data) {
-                console.log(result.data)
                 return dispatch({
                     type: TYPE_GROUP_SET_LIST,
                     value: result.data

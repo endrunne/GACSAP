@@ -107,6 +107,7 @@ export const searchGroups = (evento) => {
         if (window.confirm('Deseja realmente atribuir as turmas?')) {
             try {
                 await axios.get(URL + "assignGroups/")
+
                 dispatch(getClassroomList())
                 dispatch(setSuccessMessage('Turmas atribuídas com sucesso'))
             } catch (e) {

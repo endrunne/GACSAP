@@ -1,15 +1,14 @@
 import React from 'react'
 import { Cabecalho } from '../../componentes/cabecalho'
-import { BotaoAtribuir } from '../../componentes/classroom/botaoAtribuirTurmas'
-import { ClassroomList } from '../../componentes/classroom/lista.js'
+
+import { Atribuir } from '../../componentes/classroom/atribuir'
 
 export const ClassroomGroupAssignmentPage = props => {
 
     return (
         <div className='container'>
             <Cabecalho titulo="Atribuição de Turmas" subtitulo=""/>
-            <BotaoAtribuir/>
-            <ClassroomList isAdmin={false} isAssignment={true}/>
+            <Atribuir/>
         </div>
     )
 }

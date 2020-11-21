@@ -16,7 +16,8 @@ const BotaoAtribuir = props => {
     )
 }
 
-const mapStoreToProps = store => ({})
+const mapStoreToProps = store => ({
+})
 
 const mapActionToProps = dispatch => bindActionCreators({
     searchGroups

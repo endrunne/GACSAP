@@ -52,7 +52,7 @@ const GroupList = props => {
     }
     return (
         <div>
-            <h3>Lista de Salas</h3>
+            <h3>Lista de Turmas</h3>
             <table className="table table-striped">
                 <thead>
                     <tr>
