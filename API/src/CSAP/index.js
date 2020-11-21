@@ -24,8 +24,6 @@
         .catch(err => {throw err});
     }
 
-
-
     const csap = function() {
         var mutationFunction = function( phenotype ) {
         return phenotype;
@@ -36,8 +34,6 @@
         return [ phenotypeA , phenotypeB ]
     }
 
-    function atribuirTurma( classroom,)
-
     var fitnessFunction = async function(phenotype) {
         var score = 0
         // use your phenotype data to figure out a fitness score
@@ -45,6 +41,8 @@
         promise.then(([classroomData, groupData]) => {
             let groupPhenotype = [];
             groupPhenotype.push(groupData);
+
+            let result = [];
             
             phenotype = [];
             phenotype.push(classroomData);
@@ -103,10 +101,29 @@
                 phenotype[possibleAssigns[0].index].assignedGroup = group.code
 
                 /* Persistencia da turma atribuida*/
+                UpdateClassroom(phenotype[possibleAssigns[0].index])
                 
             })
         }).catch(err => {throw err});        
         return score
+    }
+
+    function UpdateClassroom(classroom) {
+        const data = classroom;
+        fetch('http://localhost:3000/api/classrooms' + "/" + classroom._id, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     var groupFuntion = function(phenotype) {
