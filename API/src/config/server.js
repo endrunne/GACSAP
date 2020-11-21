@@ -12,11 +12,11 @@ server.use(bodyParser.json())
 server.use(cors)
 server.use(debug)
 
-server.listen(port, _ => console.log(`Servidor no ar na porta ${port}`))
-
 server.get("/api/classrooms/assignGroups", async(req, res) => {
     const csapPromiseResolved = await Promise.resolve(csap());        
     res.json(JSON.stringify(csapPromiseResolved));
 })
+
+server.listen(port, _ => console.log(`Servidor no ar na porta ${port}`))
 
 module.exports = server

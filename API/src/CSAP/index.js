@@ -7,7 +7,7 @@
         let url = 'http://localhost:3000/api/groups';        
         return await fetch(url)
         .then(res => res.json())
-        .then((groupData) => {            
+        .then((groupData) => {
             return groupData;
         })
         .catch(err => {throw err});
@@ -17,11 +17,14 @@
         let url = 'http://localhost:3000/api/classrooms';        
         return await fetch(url)
         .then(res => res.json())
-        .then((groupData) => {            
-            return groupData;
+        .then((classroomData) => {
+            classroomData.map( (classroom) => { delete classroom.assignedGroup}) //remove a turma atribuida para o funcionamento total da rotina para todos os classrooms
+            return classroomData;
         })
         .catch(err => {throw err});
     }
+
+
 
     const csap = function() {
         var mutationFunction = function( phenotype ) {
@@ -33,6 +36,8 @@
         return [ phenotypeA , phenotypeB ]
     }
 
+    function atribuirTurma( classroom,)
+
     var fitnessFunction = async function(phenotype) {
         var score = 0
         // use your phenotype data to figure out a fitness score
@@ -42,52 +47,64 @@
             groupPhenotype.push(groupData);
             
             phenotype = [];
-            phenotype.push(classroomData);        
+            phenotype.push(classroomData);
+            
+            /*Ordenando os grupos pela quantidade total de alunos, priorizando turmas maiores primeiro*/
+            groupPhenotype.sort( (a, b) => {
+                    if(a.students + a.specialStudents < b.students + b.specialStudents )
+                        return -1
+                    if(a.students + a.specialStudents > b.students + b.specialStudents )
+                        return 1
+                    
+                    return 0
+                }
+            )
+
+            groupPhenotype.map( group => {
+                /*verificar se grupo tem um possivel lugar nas classes*/
+                let possibleAssigns = []
+                phenotype.map( (classroom, index) => {
+                    if(!classroom.assignedGroup)
+                        continue
+
+                    if( classroom.spaces >= group.students && classroom.specialSpaces >= group.specialStudents){
+                        possibleAssigns.push({index})
+                    }
+                })
+
+                /*Se não tiver possibilidade nem tenta */
+                if(possibleAssigns.length === 0){
+                    continue
+                }
+                /*Atribui já a turma a sala disponível, uma vez que já ordenado as turmas */
+                if( possibleAssigns.length === 1 ){
+                    phenotype[possibleAssigns[0].index].assignedGroup = group.code
+                    continue
+                }
+
+                /* faz o score de cada uma das atribuicoes e armazena no array. Quanto menor, melhor*/
+                possibleAssigns.map( possibleAssign => {
+                    possibleAssign.score = (phenotype[possibleAssign.index].normalSpaces - group.students)
+                    possibleAssign.score += (phenotype[possibleAssign.index].specialSpaces - group.specialStudents)
+                })
+
+                /* Ordenando desc o array atraves do score */
+                possibleAssigns.sort( (a, b) => {
+                        if(a.score < b.score )
+                            return 1
+                        if( a.score > b.score )
+                            return -1
                         
-            for (var i = 0; i < phenotype[0].length; i++)
-            {
-                var group = groupPhenotype[0];
-                var classroom = phenotype[0];
+                        return 0
+                    }
+                )
 
-                // Group local variables
-                var code = group[i].code;
-                var students = group[i].students;
-                var specialStudents = group[i].specialStudents;                
+                /* pega o menor score e atribui a turma*/
+                phenotype[possibleAssigns[0].index].assignedGroup = group.code
 
-                // Classroom local variables
-                var assignedGroup = classroom[i].assignedGroup;
-                var normalSpaces = classroom[i].normalSpaces;
-                var accessibleSpaces = classroom[i].accessibleSpaces;
-
-                if (normalSpaces == students && accessibleSpaces == specialStudents)
-                {    
-                    score = 10;
-                    assignedGroup = code;
-                    groupFuntion(classroom[i]);
-                    continue;
-                }
-                else if (normalSpaces == students && specialStudents <= accessibleSpaces)
-                {   
-                    score = 8;
-                    assignedGroup = code;
-                    groupFuntion(classroom[i]);
-                    continue;
-                }
-                else if (students <= normalSpaces && specialStudents <= accessibleSpaces)
-                {    
-                    score = 5;
-                    assignedGroup = code;
-                    groupFuntion(classroom[i]);
-                    continue;
-                }
-                else if (normalSpaces > students && accessibleSpaces > specialStudents)
-                {    
-                    score = 0;
-                    assignedGroup = code;
-                    groupFuntion(classroom[i]);
-                    continue;
-                }
-            }
+                /* Persistencia da turma atribuida*/
+                
+            })
         }).catch(err => {throw err});        
         return score
     }
