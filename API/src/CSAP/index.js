@@ -1,46 +1,32 @@
-    const geneticAlgorithmConstructor = require('../index.js')
-    const fetch = require("node-fetch");
-    
-    let json = [];
+const fetch = require("node-fetch");
 
-    var getGroupsPhenotype = async function() {
-        let url = 'http://localhost:3000/api/groups';        
-        return await fetch(url)
-        .then(res => res.json())
-        .then((groupData) => {
-            return groupData;
-        })
-        .catch(err => {throw err});
-    }
+var getGroupsPhenotype = async function() {
+    let url = 'http://localhost:3000/api/groups';        
+    return await fetch(url)
+    .then(res => res.json())
+    .then((groupData) => {
+        return groupData;
+    })
+    .catch(err => {throw err});
+}
 
-    var getClassroomsPhenotype = async function() {        
-        let url = 'http://localhost:3000/api/classrooms';        
-        return await fetch(url)
-        .then(res => res.json())
-        .then((classroomData) => {
-            classroomData.map( (classroom) => { delete classroom.assignedGroup}) //remove a turma atribuida para o funcionamento total da rotina para todos os classrooms
-            return classroomData;
-        })
-        .catch(err => {throw err});
-    }
+var getClassroomsPhenotype = async function() {        
+    let url = 'http://localhost:3000/api/classrooms';        
+    return await fetch(url)
+    .then(res => res.json())
+    .then((classroomData) => {
+        classroomData.map( (classroom) => { delete classroom.assignedGroup}) //remove a turma atribuida para o funcionamento total da rotina para todos os classrooms
+        return classroomData;
+    })
+    .catch(err => {throw err});
+}
 
-    const csap = function() {
-        var mutationFunction = function( phenotype ) {
-        return phenotype;
-    }
-
-    function crossoverFunction(phenotypeA, phenotypeB) {
-        // move, copy, or append some values from a to b and from b to a
-        return [ phenotypeA , phenotypeB ]
-    }
-
-    var fitnessFunction = async function(phenotype) {
-        var score = 0
+const csap = function() {     
+    var fitnessFunction = async function() {
         // use your phenotype data to figure out a fitness score
         let promise = Promise.all([getClassroomsPhenotype(), getGroupsPhenotype()]);
         promise.then(([classroomData, groupData]) => {
             let groupPhenotype = groupData;
-
             let phenotype = classroomData;
             
             /*Ordenando os grupos pela quantidade total de alunos, priorizando turmas maiores primeiro*/
@@ -98,7 +84,6 @@
                 }
             })
         }).catch(err => {throw err});        
-        return score
     }
 
     async function UpdateClassroom(classroom) {
@@ -120,30 +105,10 @@
         });
     }
 
-    var groupFuntion = function(phenotype) {
-        json.push(phenotype);  
-    }            
-
-    var geneticAlgorithm;
-
     return new Promise (function(resolve, reject) {
-        geneticAlgorithm = geneticAlgorithmConstructor({
-           mutationFunction: mutationFunction,
-           crossoverFunction: crossoverFunction,
-           fitnessFunction: fitnessFunction,
-           population: [ json ],
-           populationSize:3
-        });
-        if (geneticAlgorithm != null)
-            resolve()
-        else
-           reject()
-
+        resolve()
     }).then(() => {
-        for( var i = 0 ; i < json.length ; i++ ) geneticAlgorithm.evolve()
-        var best = geneticAlgorithm.best()
-        delete best.score        
-        return best;
+        fitnessFunction();
     }).catch((error) => {console.error(error);})
 }
 
